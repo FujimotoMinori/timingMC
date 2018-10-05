@@ -16,7 +16,7 @@ using namespace std;
 
 int chargevsToT(){
 	string finname = "/Users/fujimoto/Desktop/data/outputMC2017final.root";
-	string foutname = "tot.root";
+	string foutname = "../rootfile/tot.root";
 
 	//file open
 	TFile* fin = TFile::Open(finname.c_str(), "READ");
@@ -48,7 +48,7 @@ int chargevsToT(){
 
   //set output file
 	TFile* fout = TFile::Open(foutname.c_str(), "RECREATE"); 
-	std::ofstream summary("chargedistribution.txt");
+	std::ofstream summary("../text/chargedistribution.txt");
 
   //make canvas
   //TString name;
