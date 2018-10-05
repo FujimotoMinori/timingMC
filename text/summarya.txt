@@ -1,0 +1,32 @@
+
+Processing chargevsToT.cxx...
+ input data file:../data/outputMC2017.root open...
+----- get tree -----
+entry number=795869
+layer ID=1
+made histograms
+filled in histograms
+--------------------------mean edge in ToT 4 of all module= 6707.54
+--------------------------mean edge in ToT 5 of all module= 7653.34
+--------------------------mean edge in ToT 6 of all module= 8635.48
+--------------------------mean edge in ToT 7 of all module= 9648.73
+--------------------------mean edge in ToT 8 of all module= 10627.2
+--------------------------mean edge in ToT 9 of all module= 11664.7
+layer ID=2
+made histograms
+filled in histograms
+--------------------------mean edge in ToT 4 of all module= 3932.89
+--------------------------mean edge in ToT 5 of all module= 4513.44
+--------------------------mean edge in ToT 6 of all module= 5099.93
+--------------------------mean edge in ToT 7 of all module= 5682.01
+--------------------------mean edge in ToT 8 of all module= 6295.74
+--------------------------mean edge in ToT 9 of all module= 6919.02
+layer ID=3
+made histograms
+filled in histograms
+--------------------------mean edge in ToT 4 of all module= 3862.65
+--------------------------mean edge in ToT 5 of all module= 4489.73
+--------------------------mean edge in ToT 6 of all module= 5075.69
+--------------------------mean edge in ToT 7 of all module= 5676.8
+--------------------------mean edge in ToT 8 of all module= 6278.88
+--------------------------mean edge in ToT 9 of all module= 6894.19
