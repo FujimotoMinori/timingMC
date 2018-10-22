@@ -1,5 +1,5 @@
 /*
-	 checkToT.C
+	 ith.C
 	 check the correlation of charge and ToT in every modules
  */
 
@@ -14,8 +14,8 @@
 #include <cmath>
 using namespace std;
 
-int checkToT(){
-	cout << "----- start bunchvsToT.cxx -----" << endl;
+void ith(){
+	cout << "----- start ith.cxx -----" << endl;
 
 	string finname = "/Users/fujimoto/Desktop/data/outputMC2017final.root";
 	//string foutname = "../data/test3.root";
@@ -24,7 +24,7 @@ int checkToT(){
 	TFile* fin = TFile::Open(finname.c_str(), "READ");
 	if (!fin) {
 		cout << " input file:" << finname.c_str() << " does not exist"<< endl;
-		return 0;
+		return;
 	}
 	cout << " input data file:" << finname.c_str() << " open..." << endl;
 
@@ -59,7 +59,7 @@ int checkToT(){
 		tin->GetEntry(ientry);
 		hcharge->Fill(charge);
 		htot->Fill(ToT);
-		if(bunch<3&&ToT<20&&ToT>3&&bec==0&&layerID==3/*&&abs(moduleID)==0*/){
+		if(bunch<3&&ToT<20&&ToT>5&&bec==0&&layerID==2/*&&abs(moduleID)==0*/){
 			hQvsToT->Fill(charge,ToT);
 			//hbunch->Fill(bunch,ToT);
 			//hbunch2->Fill(bunch,charge);
@@ -70,7 +70,6 @@ int checkToT(){
 	//get content of histgram
 	Int_t first = hQvsToT->GetXaxis()->FindBin(5000);
 	Int_t last  = hQvsToT->GetXaxis()->FindBin(8000);
-	//hQvsToT->ProjectionY("h1_py",first,last);
    
   /*
 	double z[hbunch->GetNbinsX()+1][hbunch->GetNbinsY()+1];
@@ -88,16 +87,26 @@ int checkToT(){
 	hcharge->Draw();
 	TCanvas *c3 = new TCanvas("c3", "c3");
 	hQvsToT->Draw("box");
-	TCanvas *c4 = new TCanvas("c4", "c4");
-	//hQvsToT->ProjectionY("pj",first,last)->Draw();
-	hQvsToT->ProjectionY("",first,last)->Draw();
+	//TCanvas *c4 = new TCanvas("c4", "c4");
+	//hQvsToT->ProjectionY("",first,last)->Draw();
+	hQvsToT->ProjectionX("",6,7)/*->Draw()*/;
+    double edge;
+    double mean;
+    double rms;
+    for(int i = 6;i<14;i++){
+      mean = hQvsToT->ProjectionX("",i,i+1)->GetMean();
+      rms = hQvsToT->ProjectionX("",i,i+1)->GetRMS();
+      edge = mean+rms;
+      std::cout << "edge of ToT " << i << "= " << edge << std::endl; 
+    }
 	
 	//fout->Write();
 	//fout->Close();
 
 	cout << "----- finished  bunchvsToT.cxx -----" << endl;
 
-	return 0;
+	return;
 
 }
+
 

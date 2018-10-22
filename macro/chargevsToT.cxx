@@ -111,17 +111,17 @@ int chargevsToT(){
 			hedge[LID]->Fill(j,i,edge[i][j]);
 			edgetotal[i] += edge[i][j];
 
-      //hToT[LID][i][j]->Draw("same");
-		}
+            //hToT[LID][i][j]->Draw("same");
+        }
 			//c1->Print(name, "pdf"); 
 			cout << "--------------------------mean edge in ToT " << i << " of all module= " << edgetotal[i]/nmodule << endl;
 			summary << "--------------------------mean edge in ToT " << i << " of all module= " << edgetotal[i]/nmodule << endl;
 	}
 	//c1->Print(name + "]", "pdf");
 
-  hedge[LID]->SetStats(0);
-	hedge[LID]->Draw("text45 colz");
-  hedge[LID]->Write();
+    hedge[LID]->SetStats(0);
+    hedge[LID]->Draw("text45 colz");
+    hedge[LID]->Write();
 
 	}//layerID loop
 
