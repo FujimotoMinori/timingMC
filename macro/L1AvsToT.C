@@ -15,7 +15,8 @@ using namespace std;
 int L1AvsToT(){
 	cout << "----- start L1AvsToT.cxx -----" << endl;
 
-	string finname = "../data/TimingChargePix.root";
+	//string finname = "../data/TimingChargePix.root";
+	string finname = "/Users/fujimoto/Desktop/data/TimingChargePix.root";
 	string foutname = "../data/test3.root";
 
 	//file open
@@ -61,7 +62,7 @@ int L1AvsToT(){
 		tin->GetEntry(ientry);    
 		h1->Fill(ToT);
 		h3->Fill(L1A);
-		if(L1A<3&&ToT<20&&bec==0&&layer==1/*&&abs(eta_index)==6*/){
+		if(L1A<3&&ToT<20&&bec==0&&layer==3/*&&abs(eta_index)==6*/){
 			h2->Fill(L1A,ToT);
 		}
 	}

@@ -15,7 +15,7 @@
 using namespace std;
 
 int chargevsToT(){
-	string finname = "/Users/fujimoto/Desktop/data/outputMC2017final.root";
+	string finname = "/Users/fujimoto/Desktop/data/outputMC1028.root";
 	string foutname = "../rootfile/tot.root";
 
 	//file open

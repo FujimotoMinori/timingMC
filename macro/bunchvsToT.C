@@ -17,8 +17,7 @@ using namespace std;
 int bunchvsToT(){
 	cout << "----- start bunchvsToT.cxx -----" << endl;
 
-	//string finname = "../data/outputMC2017tuned10.root";
-	string finname = "/Users/fujimoto/Desktop/data/outputMC2017final.root";
+	string finname = "/Users/fujimoto/Desktop/data/outputMC1028.root";
 	string foutname = "../data/test3.root";
 
 	//file open
@@ -67,7 +66,7 @@ int bunchvsToT(){
 	//cout << "-------------------------------------charge =" << charge << endl;
           hcharge->Fill(charge);
           h2->Fill(bunch);
-          if(bunch<3&&ToT<20&&ToT>5&&bec==0&&layerID==3/*&&abs(moduleID)==0*/){
+          if(bunch<3&&ToT<20&&ToT>5&&bec==0&&layerID==2/*&&abs(moduleID)==0*/){
           hQvsToT->Fill(charge,ToT);
           hbunch->Fill(bunch+1,ToT);
           hbunch2->Fill(bunch+1,charge);
@@ -106,9 +105,9 @@ int bunchvsToT(){
 	double n1=0.;
 	double n2=0.;
 	for (int j=0; j<hbunch->GetNbinsY()+1; j++){
-		if(z[1][j]+z[2][j] == 0) continue;
-		n1 = z[1][j];
-		n2 = z[2][j];
+		if(z[2][j]+z[3][j] == 0) continue;
+		n1 = z[2][j];
+		n2 = z[3][j];
 		prob = n2/(n1+n2);
 		//calculate error of prob
 		e1 = pow(n1,0.5);

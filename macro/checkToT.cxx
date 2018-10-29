@@ -35,7 +35,7 @@ int checkToT(){
 	//make histogram
 	TH1F *htot = new TH1F("htot","ToT",21,0,20);
 	TH1F *hcharge = new TH1F("hcharge","charge",100,0,30000);
-	TH2F *hQvsToT = new TH2F("hbunch","chargeVSToT;charge;ToT",40,3500,10000,20,0,20);
+	TH2F *hQvsToT = new TH2F("hbunch","chargeVSToT;charge;ToT",60,3500,15000,20,0,20);
 
 	//TFile* fout = TFile::Open(foutname.c_str(), "RECREATE"); 
 	
@@ -59,7 +59,7 @@ int checkToT(){
 		tin->GetEntry(ientry);
 		hcharge->Fill(charge);
 		htot->Fill(ToT);
-		if(bunch<3&&ToT<20&&ToT>3&&bec==0&&layerID==3/*&&abs(moduleID)==0*/){
+		if(bunch<3&&ToT<20&&ToT>5&&bec==0&&layerID==2/*&&abs(moduleID)==0*/){
 			hQvsToT->Fill(charge,ToT);
 			//hbunch->Fill(bunch,ToT);
 			//hbunch2->Fill(bunch,charge);

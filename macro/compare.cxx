@@ -17,8 +17,8 @@ int compare(){
 	std::cout << "#-----start checkflipbitFE.cxx-----" << std::endl;
 
 	//set open file
-	TString ifn = "./text/summarydatablayer.txt";
-	TString ifn2 = "summaryMC2017ithblayer.txt";
+	TString ifn = "./text/datablayer.txt";
+	TString ifn2 = "./text/ithblayer.txt";
 
 	//TString name;
 	//name.Form("canv.pdf");
@@ -104,8 +104,8 @@ int compare(){
 	}
 
     TGraphErrors *gr = new TGraphErrors(n-6,x+6,y+6,xe+6,ye+6);
-    //gr->SetMaximum(3.5);
-    //gr->SetMinimum(0.0);
+    gr->SetMaximum(0.5);
+    gr->SetMinimum(-0.5);
     gr->SetTitle("Ratio of Data and MC;ToT;prob of MC / prob of data");
     gr->SetMarkerColor(4);
     gr->SetMarkerStyle(20);
