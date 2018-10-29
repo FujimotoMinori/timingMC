@@ -59,7 +59,7 @@ int decideith(){
   cout << "entry number=" << N << endl;
 
   //intime threshold loop
-  for(int ith = 3500;ith<3700;ith=ith+100){
+  for(int ith = 6000;ith<7000;ith=ith+100){
     cout << "ith= " << ith << endl; 
 
     //fill in histogram
@@ -67,7 +67,7 @@ int decideith(){
       tin->GetEntry(ientry);
       //hcharge->Fill(charge);
       h2->Fill(bunch);
-      if(bunch<3&&ToT<15&&ToT>5&&bec==0&&layerID==1){
+      if(bunch<3&&ToT<15&&ToT>5&&bec==0&&layerID==2){
         //move to the next bunch if charge was lower than intime threshold
         if(charge<ith) ++bunch;
         hQvsToT->Fill(charge,ToT);

@@ -18,7 +18,7 @@ int bunchvsToT(){
 	cout << "----- start bunchvsToT.cxx -----" << endl;
 
 	string finname = "/Users/fujimoto/Desktop/data/outputMC1028.root";
-	string foutname = "../data/test3.root";
+	//string foutname = "../data/test3.root";
 
 	//file open
 	TFile* fin = TFile::Open(finname.c_str(), "READ");
@@ -42,7 +42,7 @@ int bunchvsToT(){
 	TH2F *hQvsToT = new TH2F("hbunch","chargeVSToT;charge;ToT",20,3500,10000,20,1,20);
 	TH1F *h2 = new TH1F("h2","bunch",11,-5,5);
 
-	TFile* fout = TFile::Open(foutname.c_str(), "RECREATE"); 
+	//TFile* fout = TFile::Open(foutname.c_str(), "RECREATE"); 
 	
 	//get branch 
 	Int_t bec;
@@ -66,7 +66,7 @@ int bunchvsToT(){
 	//cout << "-------------------------------------charge =" << charge << endl;
           hcharge->Fill(charge);
           h2->Fill(bunch);
-          if(bunch<3&&ToT<20&&ToT>5&&bec==0&&layerID==2/*&&abs(moduleID)==0*/){
+          if(bunch<3&&ToT<20&&ToT>5&&bec==0&&layerID==3/*&&abs(moduleID)==0*/){
           hQvsToT->Fill(charge,ToT);
           hbunch->Fill(bunch+1,ToT);
           hbunch2->Fill(bunch+1,charge);
@@ -114,14 +114,15 @@ int bunchvsToT(){
 		e2 = pow(n2,0.5);
 		ep = sqrt(pow(n2*e1,2)+pow(n1*e2,2))/pow((n1+n2),2);
 
-		cout << "prob when ToT" << j << "= " << prob <<  " error= " << ep << endl; 
+		//cout << "prob when ToT" << j << "= " << prob <<  " error= " << ep << endl; 
+		cout <<  j << " " << prob <<  " " << ep << endl; 
 	}
 
 	//TCanvas *c3 = new TCanvas("c3", "c3");
 	//h3->Draw();
 
-	fout->Write();
-	fout->Close();
+	//fout->Write();
+	//fout->Close();
 
 	cout << "----- finished  bunchvsToT.cxx -----" << endl;
 
