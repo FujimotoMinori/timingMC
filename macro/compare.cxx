@@ -18,7 +18,7 @@ int compare(){
 
 	//set open file
 	TString ifn = "../text/dataL1.txt";
-	TString ifn2 = "../text/ithL1ToT10_2.txt";
+	TString ifn2 = "../text/ithL1.txt";
 
 	//TString name;
 	//name.Form("canv.pdf");

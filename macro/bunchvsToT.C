@@ -17,7 +17,7 @@ using namespace std;
 int bunchvsToT(){
 	cout << "----- start bunchvsToT.cxx -----" << endl;
 
-	string finname = "/Users/fujimoto/Desktop/data/outputMC1028.root";
+	string finname = "/Users/fujimoto/Desktop/data/outputMC1031.root";
 	//string foutname = "../data/test3.root";
 
 	//file open

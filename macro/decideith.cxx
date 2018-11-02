@@ -17,7 +17,7 @@ using namespace std;
 int decideith(){
   cout << "----- start bunchvsToT.cxx -----" << endl;
 
-  string finname = "/Users/fujimoto/Desktop/data/outputMC2017final.root";
+  string finname = "/Users/fujimoto/Desktop/data/outputMC1030.root";
   //string foutname = "../data/test3.root";
 
   //file open
@@ -37,7 +37,7 @@ int decideith(){
   TH1F *hcharge = new TH1F("hcharge","charge",100,0,30000);
   TH2F *hbunch = new TH2F("hbunch","bunchVSToT;bunch;ToT",3,-0.5,2.5,20,1,20);
   TH2F *hbunch2 = new TH2F("hbunch2","bunchVScharge;bunch;charge",3,-0.5,2.5,60,4000,15000);
-  TH2F *hQvsToT = new TH2F("hbunch","chargeVSToT;charge;ToT",20,3500,10000,20,1,20);
+  TH2F *hQvsToT = new TH2F("hbunch","chargeVSToT;charge;ToT",40,2000,10000,20,1,20);
   TH1F *h2 = new TH1F("h2","bunch",11,-5,5);
 
   //TFile* fout = TFile::Open(foutname.c_str(), "RECREATE"); 
@@ -59,7 +59,7 @@ int decideith(){
   cout << "entry number=" << N << endl;
 
   //intime threshold loop
-  for(int ith = 6000;ith<7000;ith=ith+100){
+  for(int ith = 3500;ith<3600;ith=ith+100){
     cout << "ith= " << ith << endl; 
 
     //fill in histogram
