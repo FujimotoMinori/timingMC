@@ -17,7 +17,7 @@ using namespace std;
 int bunchvsToT(){
 	cout << "----- start bunchvsToT.cxx -----" << endl;
 
-	string finname = "/Users/fujimoto/Desktop/data/outputMC1031.root";
+	string finname = "/Users/fujimoto/Desktop/data/outputMC2017ith.root";
 	//string foutname = "../data/test3.root";
 
 	//file open
@@ -66,7 +66,7 @@ int bunchvsToT(){
 	//cout << "-------------------------------------charge =" << charge << endl;
           hcharge->Fill(charge);
           h2->Fill(bunch);
-          if(bunch<3&&ToT<20&&ToT>5&&bec==0&&layerID==3/*&&abs(moduleID)==0*/){
+          if(bunch<3&&ToT<20&&ToT>5&&bec==0&&layerID==2/*&&abs(moduleID)==0*/){
           hQvsToT->Fill(charge,ToT);
           hbunch->Fill(bunch+1,ToT);
           hbunch2->Fill(bunch+1,charge);

@@ -1,5 +1,5 @@
 /*
-	 compare two files
+	 compare three files
  */
 #include <iostream>
 #include <string>
@@ -13,12 +13,13 @@
 #include <TCanvas.h>
 #include <TString.h>
 
-int compare(){
+int compare3(){
 	std::cout << "#-----start checkflipbitFE.cxx-----" << std::endl;
 
 	//set open file
 	TString ifn = "../text/dataL2.txt";
-	TString ifn2 = "../text/summaryMC2017ithL2.txt";
+	TString ifn2 = "../text/tunedL2.txt";
+	TString ifn3 = "../text/summaryMC2017ithL2.txt";
 
 	//TString name;
 	//name.Form("canv.pdf");
@@ -28,8 +29,10 @@ int compare(){
 	std::cout << "#inputFile=" <<ifn2 << std::endl;
 	ifstream fin;
 	ifstream fin2;
+	ifstream fin3;
 	std::string str;
 	std::string str2;
+	std::string str3;
 
 	//open files
 	fin.open(ifn);
@@ -42,7 +45,11 @@ int compare(){
 		cerr << "#cannot open file2 : " << ifn2 << std::endl;
 		return 1;
 	}
-
+	fin3.open(ifn3);
+	if(fin3.fail()){
+		cerr << "#cannot open file3 : " << ifn3 << std::endl;
+		return 1;
+	}
 	std::cout << "#finished opening files" << std::endl;
 
 	//read file
@@ -76,34 +83,61 @@ int compare(){
 		err2[a2] = c2;
 	}
 
+	int a3;
+	float b3,c3;
+	float val3[20] = {};
+	float err3[20] = {};
+	while(getline(fin3,str3))
+	{
+		if(str3[0] == '#') continue;
+		a3 = 0;
+		b3 = 0;
+		c3 = 0;
+		sscanf(str3.data(), "%d %f %f", &a3, &b3, &c3);
+		val3[a3] = b3;
+		err3[a3] = c3;
+	}
+
   //compare 2 values
-	float val = 0.;
+	//float val = 0.;
+	//float vals = 0.;
 	float err = 0.;
+	float errs = 0.;
 	float ratioerr = 0.;
+	float ratioerrs = 0.;
 	float ratio = 0.;
+	float ratios = 0.;
 	const Int_t n = 20;
     Double_t x[n] = {} ,y[n] = {};
+    Double_t xs[n] = {} ,ys[n] = {};
     Double_t xe[n] = {} ,ye[n] = {};
+    Double_t xes[n] = {} ,yes[n] = {};
     int i = 0;
 	for(i=6;i<20;i++){
-		//std::cout << "ToT" << i << " val from data= " << val1[i] << std::endl;
-		//std::cout << "ToT" << i << " val from MC= " << val2[i] << std::endl;
-		val = val2[i] - val1[i];
-		err = err2[i] - err1[i];
+		//val = val2[i] - val1[i];
+		//vals = val3[i] - val1[i];
+		//err = err2[i] - err1[i];
+		//errs = err3[i] - err1[i];
 		ratio = val2[i]/val1[i];
+		ratios = val3[i]/val1[i];
 		ratioerr = sqrt(pow(val2[i]*err1[i],2)+pow(val1[i]*err2[i],2))/pow(val2[i],2); 
+		ratioerrs = sqrt(pow(val3[i]*err1[i],2)+pow(val1[i]*err3[i],2))/pow(val3[i],2); 
         x[i] = i;
-        //y[i] = val;
+        xs[i] = i;
         y[i] = ratio;
+        ys[i] = ratios;
         xe[i] = 0;
+        xes[i] = 0;
         ye[i] = ratioerr;
-		std::cout << "val in ToT " << i << " = " << val << std::endl;
-		std::cout << "err in ToT " << i << " = " << err << std::endl;
-		std::cout << "ratio in ToT " << x[i] << " = " << ratio << std::endl;
-		std::cout << "ratioerror in ToT " << x[i] << " = " << ratioerr << std::endl;
+        yes[i] = ratioerrs;
+		//std::cout << "val in ToT " << i << " = " << val << std::endl;
+		//std::cout << "err in ToT " << i << " = " << err << std::endl;
+		//std::cout << "ratio in ToT " << x[i] << " = " << ratio << std::endl;
+		//std::cout << "ratioerror in ToT " << x[i] << " = " << ratioerr << std::endl;
 	}
 
     TGraphErrors *gr = new TGraphErrors(n-6,x+6,y+6,xe+6,ye+6);
+    TGraphErrors *gr2 = new TGraphErrors(n-6,xs+6,ys+6,xes+6,yes+6);
     gr->SetMaximum(4.5);
     gr->SetMinimum(-2.5);
     gr->SetTitle("Ratio of Data and MC;ToT;prob of MC / prob of data");
@@ -111,6 +145,10 @@ int compare(){
     gr->SetMarkerStyle(20);
     gr->SetMarkerSize(1.0);
     gr->Draw("AP");
+    gr2->SetMarkerColor(1);
+    gr2->SetMarkerStyle(20);
+    gr2->SetMarkerSize(1.0);
+    gr2->Draw("P");
 
 
  return 0;
