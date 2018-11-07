@@ -17,7 +17,7 @@ using namespace std;
 int decideith(){
   cout << "----- start bunchvsToT.cxx -----" << endl;
 
-  string finname = "/Users/fujimoto/Desktop/data/outputMC1030.root";
+  string finname = "/Users/fujimoto/Desktop/data/outputMC2017ith.root";
   //string foutname = "../data/test3.root";
 
   //file open
@@ -37,7 +37,7 @@ int decideith(){
   TH1F *hcharge = new TH1F("hcharge","charge",100,0,30000);
   TH2F *hbunch = new TH2F("hbunch","bunchVSToT;bunch;ToT",3,-0.5,2.5,20,1,20);
   TH2F *hbunch2 = new TH2F("hbunch2","bunchVScharge;bunch;charge",3,-0.5,2.5,60,4000,15000);
-  TH2F *hQvsToT = new TH2F("hbunch","chargeVSToT;charge;ToT",40,2000,10000,20,1,20);
+  TH2F *hQvsToT = new TH2F("hbunch","chargeVSToT;charge;ToT",20,2000,10000,20,1,20);
   TH1F *h2 = new TH1F("h2","bunch",11,-5,5);
 
   //TFile* fout = TFile::Open(foutname.c_str(), "RECREATE"); 
@@ -58,6 +58,7 @@ int decideith(){
   const Int_t N = tin->GetEntries();
   cout << "entry number=" << N << endl;
 
+  
   //intime threshold loop
   for(int ith = 3500;ith<3600;ith=ith+100){
     cout << "ith= " << ith << endl; 
@@ -66,6 +67,7 @@ int decideith(){
     for (Int_t ientry = 0; ientry < N; ientry++) {
       tin->GetEntry(ientry);
       //hcharge->Fill(charge);
+      //if(charge<3500) continue;
       h2->Fill(bunch);
       if(bunch<3&&ToT<15&&ToT>5&&bec==0&&layerID==2){
         //move to the next bunch if charge was lower than intime threshold

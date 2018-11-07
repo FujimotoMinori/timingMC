@@ -15,7 +15,7 @@
 using namespace std;
 
 int chargevsToT_org(){
-	string finname = "/Users/fujimoto/Desktop/data/outputMC1030.root";
+	string finname = "/Users/fujimoto/Desktop/data/outputMC1031.root";
 	string foutname = "tot_org.root";
 
 	//file open
@@ -68,7 +68,7 @@ int chargevsToT_org(){
 	//fill in histogram
 	for (Int_t ientry = 0; ientry < N; ientry++) {
 		tin->GetEntry(ientry);
-		if(bec == 0 && layerID == 1){
+		if(bec == 0 && layerID == 2){
 			for(int i=4;i<nToT+4;i++){
 				for (int j=0;j<nmodule;j++){
 					if(ToT == i) {

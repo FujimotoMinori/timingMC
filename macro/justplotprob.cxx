@@ -15,8 +15,8 @@
 
 int justplotprob(){
   //set open file
-  TString ifn = "../text/datablayer.txt";
-  TString ifn2 = "../text/ithblayer.txt";
+  TString ifn = "../text/dataL2.txt";
+  TString ifn2 = "../text/MC2015L2.txt";
 
   std::cout << "#inputFile=" <<ifn2 << std::endl;
   ifstream fin;
@@ -83,7 +83,7 @@ int justplotprob(){
 
   TGraph *gr = new TGraph(n-6,x+6,y+6);
   TGraph *gr2 = new TGraph(n-6,x2+6,y2+6);
-  gr->SetMaximum(0.05);
+  gr->SetMaximum(0.70);
   gr->SetMinimum(0.);
   gr->SetTitle("timewalk probability;ToT;prob");
   gr->SetMarkerColor(2);

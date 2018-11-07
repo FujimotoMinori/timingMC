@@ -18,7 +18,7 @@ int compare(){
 
 	//set open file
 	TString ifn = "../text/dataL2.txt";
-	TString ifn2 = "../text/summaryMC2017ithL2.txt";
+	TString ifn2 = "../text/tunedL2.txt";
 
 	//TString name;
 	//name.Form("canv.pdf");
@@ -104,8 +104,8 @@ int compare(){
 	}
 
     TGraphErrors *gr = new TGraphErrors(n-6,x+6,y+6,xe+6,ye+6);
-    gr->SetMaximum(4.5);
-    gr->SetMinimum(-2.5);
+    gr->SetMaximum(2.0);
+    gr->SetMinimum(0.0);
     gr->SetTitle("Ratio of Data and MC;ToT;prob of MC / prob of data");
     gr->SetMarkerColor(4);
     gr->SetMarkerStyle(20);

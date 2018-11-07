@@ -17,7 +17,7 @@ using namespace std;
 int checkToT(){
 	cout << "----- start bunchvsToT.cxx -----" << endl;
 
-	string finname = "/Users/fujimoto/Desktop/data/outputMC2017final.root";
+	string finname = "/Users/fujimoto/Desktop/data/outputMC1102.root";
 	//string foutname = "../data/test3.root";
 
 	//file open
@@ -35,7 +35,7 @@ int checkToT(){
 	//make histogram
 	TH1F *htot = new TH1F("htot","ToT",21,0,20);
 	TH1F *hcharge = new TH1F("hcharge","charge",100,0,30000);
-	TH2F *hQvsToT = new TH2F("hbunch","chargeVSToT;charge;ToT",60,3500,15000,20,0,20);
+	TH2F *hQvsToT = new TH2F("hbunch","chargeVSToT;charge;ToT",60,2000,10000,20,0,20);
 
 	//TFile* fout = TFile::Open(foutname.c_str(), "RECREATE"); 
 	
@@ -87,6 +87,8 @@ int checkToT(){
 	TCanvas *c2 = new TCanvas("c2", "c2");
 	hcharge->Draw();
 	TCanvas *c3 = new TCanvas("c3", "c3");
+    
+	hQvsToT->SetStats(0);
 	hQvsToT->Draw("box");
 	TCanvas *c4 = new TCanvas("c4", "c4");
 	//hQvsToT->ProjectionY("pj",first,last)->Draw();

@@ -17,8 +17,8 @@ int comparediff(){
   std::cout << "#-----start checkflipbitFE.cxx-----" << std::endl;
 
   //set open file
-  TString ifn = "./text/datablayer.txt";
-  TString ifn2 = "./text/ithblayer.txt";
+  TString ifn = "../text/datanewL1.txt";
+  TString ifn2 = "../text/tunedL1.txt";
 
   //TString name;
   //name.Form("canv.pdf");
@@ -104,9 +104,10 @@ int comparediff(){
   }
 
   TGraphErrors *gr = new TGraphErrors(n-6,x+6,y+6,xe+6,ye+6);
-  gr->SetMaximum(0.01);
-  gr->SetMinimum(-0.01);
+  gr->SetMaximum(0.10);
+  gr->SetMinimum(-0.10);
   gr->SetTitle("Diff of Data and MC;ToT;prob of MC - prob of data");
+  gr->GetYaxis()->SetTitleOffset(1.3);
   gr->SetMarkerColor(4);
   gr->SetMarkerStyle(20);
   gr->SetMarkerSize(1.0);

@@ -16,7 +16,8 @@ int L1AvsToT(){
 	cout << "----- start L1AvsToT.cxx -----" << endl;
 
 	//string finname = "../data/TimingChargePix.root";
-	string finname = "/Users/fujimoto/Desktop/data/TimingChargePix.root";
+	string finname = "/Users/fujimoto/Desktop/data/timingChargePix.root";
+	//string finname = "/Users/fujimoto/Desktop/data/timingCharge_361635.root";
 	string foutname = "../data/test3.root";
 
 	//file open
@@ -36,7 +37,8 @@ int L1AvsToT(){
 	TH1F *h1 = new TH1F("h1","ToT",40,1,40);
 	//TH1F *h1 = new TH1F("h1","ToT",21,-10,10);
 	TH2F *h2 = new TH2F("h2","bunchVSToT;L1A;ToT",3,-0.5,2.5,20,1,20);
-	TH1F *h3 = new TH1F("h3","bunch",11,-5,5);
+	TH1F *h3 = new TH1F("h3","bunch",10,-5,5);
+	//TH1F *h3 = new TH1F("h3","bunch",3,-0.5,2.5);
 
 	TFile* fout = TFile::Open(foutname.c_str(), "RECREATE");
 
@@ -55,6 +57,8 @@ int L1AvsToT(){
 	tin->SetBranchAddress("phi_index", &phi_index);
 	const Int_t N = tin->GetEntries();
 	cout << "entry number=" << N << endl;
+    int Ln1 = 0;
+    int Ln2 = 0;
   
 	//fill in histogram
 	for (Int_t ientry = 0; ientry < N; ientry++) {
@@ -62,7 +66,9 @@ int L1AvsToT(){
 		tin->GetEntry(ientry);    
 		h1->Fill(ToT);
 		h3->Fill(L1A);
-		if(L1A<3&&ToT<20&&bec==0&&layer==1/*&&abs(eta_index)==6*/){
+        if(L1A == 1) ++Ln1;
+        else if(L1A == 2) ++Ln2;
+		if(L1A<3&&ToT<20&&bec==0&&layer==3/*&&abs(eta_index)==6*/){
 			h2->Fill(L1A,ToT);
 		}
 	}
@@ -104,11 +110,13 @@ int L1AvsToT(){
 
 		cout << "prob when ToT" << j << "= " << prob <<  " error= " << ep << endl; 
 	}
-	 
+    cout << "Ln1= " << Ln1 << endl; 
+    cout << "Ln2= " << Ln2 << endl; 
+
 
 	fout->Write();
 	fout->Close();
-
+    
 	cout << "----- finished  L1AvsToT.cxx -----" << endl;
 
 	return 0;

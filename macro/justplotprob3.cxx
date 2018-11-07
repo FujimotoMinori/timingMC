@@ -16,8 +16,8 @@
 int justplotprob3(){
   //set open file
   TString ifn = "../text/dataL2.txt";
-  TString ifn2 = "../text/tunedL2.txt";
-  TString ifn3 = "../text/summaryMC2017ithL2.txt";
+  TString ifn2 = "../text/tunedAll.txt";
+  TString ifn3 = "../text/ithAll.txt";
 
   std::cout << "#inputFile=" <<ifn2 << std::endl;
   ifstream fin;

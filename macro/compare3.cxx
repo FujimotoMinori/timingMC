@@ -14,7 +14,7 @@
 #include <TString.h>
 
 int compare3(){
-	std::cout << "#-----start checkflipbitFE.cxx-----" << std::endl;
+	std::cout << "#-----start compare3.cxx-----" << std::endl;
 
 	//set open file
 	TString ifn = "../text/dataL2.txt";
@@ -130,25 +130,21 @@ int compare3(){
         xes[i] = 0;
         ye[i] = ratioerr;
         yes[i] = ratioerrs;
-		//std::cout << "val in ToT " << i << " = " << val << std::endl;
-		//std::cout << "err in ToT " << i << " = " << err << std::endl;
-		//std::cout << "ratio in ToT " << x[i] << " = " << ratio << std::endl;
-		//std::cout << "ratioerror in ToT " << x[i] << " = " << ratioerr << std::endl;
 	}
 
     TGraphErrors *gr = new TGraphErrors(n-6,x+6,y+6,xe+6,ye+6);
     TGraphErrors *gr2 = new TGraphErrors(n-6,xs+6,ys+6,xes+6,yes+6);
-    gr->SetMaximum(4.5);
-    gr->SetMinimum(-2.5);
-    gr->SetTitle("Ratio of Data and MC;ToT;prob of MC / prob of data");
+    gr2->SetMaximum(2.0);
+    gr2->SetMinimum(0.0);
+    gr2->SetTitle("Ratio of Data and MC;ToT;prob of MC / prob of data");
     gr->SetMarkerColor(4);
     gr->SetMarkerStyle(20);
     gr->SetMarkerSize(1.0);
-    gr->Draw("AP");
     gr2->SetMarkerColor(1);
     gr2->SetMarkerStyle(20);
     gr2->SetMarkerSize(1.0);
-    gr2->Draw("P");
+    gr2->Draw("AP");
+    gr->Draw("P");
 
 
  return 0;
