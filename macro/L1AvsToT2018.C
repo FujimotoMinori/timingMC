@@ -6,16 +6,47 @@
 
 #include <iostream>
 #include <sstream>
+#include <string>
 #include <TFile.h>
 #include <TH1.h>
 #include <TH2D.h>
 #include <TH2F.h>
 #include <TCanvas.h>
+#include <TString.h>
 using namespace std;
 
 int L1AvsToT2018(){
 
   string finname = "/Users/fujimoto/Desktop/data/timingCharge_361635.root";
+  TString ifndata = "/Users/fujimoto/Desktop/data/modulecut.dat";
+
+  //first read data file
+  //file open
+  fstream findata;
+  std::string strdata;
+  findata.open(ifndata);
+  if(findata.fail()){
+    cerr << "cannot open data file : " << ifndata << std::endl;
+    return 1;
+  }
+
+  //read file
+  const int n_phi = 500;
+  const int n_eta = 13;
+  int a,b,c;
+  int phi[n_phi] = {};
+  int eta[n_eta] = {};
+  int n = 0;
+  while(getline(findata,strdata))
+  {
+    if(strdata[0] == '#') continue;
+    n++;
+    a = 0;
+    b = 0;
+    sscanf(strdata.data(), "%d %d", &a, &b);
+    phi[n] = a;
+    eta[n] = b;
+  }
 
   //file open
   TFile* fin = TFile::Open(finname.c_str(), "READ");
@@ -50,22 +81,24 @@ int L1AvsToT2018(){
   tin->SetBranchAddress("phi_index", &phi_index);
   const Int_t N = tin->GetEntries();
   cout << "entry number=" << N << endl;
+  cout << "filling in histogram........." << endl;
 
   //fill in histogram
   for (Int_t ientry = 0; ientry < N; ientry++) {
     tin->GetEntry(ientry);    
 
-    if(eta_index == Eta && phi_index == Phi){
-
-      h1->Fill(ToT);
-      h3->Fill(L1A);
-      if(L1A<3&&ToT<20&&bec==0&&layer==3){
-        h2->Fill(L1A,ToT);
+    for(int i =1;i<n;i++){
+      if(!(eta_index == eta[i] && phi_index == phi[i])){
+        h1->Fill(ToT);
+        h3->Fill(L1A);
+        if(L1A<3&&ToT<20&&bec==0&&layer==3){
+          h2->Fill(L1A,ToT);
+        }
       }
+    } 
 
-    }
-    
   }
+  cout << "finished filling in histogram" << endl;
 
   //draw histogram
   TCanvas *c1 = new TCanvas("c1", "c1");
