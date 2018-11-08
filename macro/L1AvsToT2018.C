@@ -18,7 +18,7 @@ using namespace std;
 int L1AvsToT2018(){
 
   string finname = "/Users/fujimoto/Desktop/data/timingCharge_361635.root";
-  TString ifndata = "/Users/fujimoto/Desktop/data/modulecut.dat";
+  TString ifndata = "/Users/fujimoto/Desktop/data/modulecutnew.dat";
 
   //first read data file
   //file open
@@ -31,22 +31,32 @@ int L1AvsToT2018(){
   }
 
   //read file
-  const int n_phi = 500;
-  const int n_eta = 13;
-  int a,b,c;
+  const int n_bec = 1000;
+  const int n_layer = 1000;
+  const int n_phi = 1000;
+  const int n_eta = 1000;
+  int a,b,c,d;
+  int becF[n_bec] = {};
+  int layerF[n_layer] = {};
   int phi[n_phi] = {};
   int eta[n_eta] = {};
   int n = 0;
+
   while(getline(findata,strdata))
   {
     if(strdata[0] == '#') continue;
     n++;
     a = 0;
     b = 0;
-    sscanf(strdata.data(), "%d %d", &a, &b);
-    phi[n] = a;
-    eta[n] = b;
+    c = 0;
+    d = 0;
+    sscanf(strdata.data(), "%d %d %d %d", &a, &b, &c, &d);
+    becF[n] = a;
+    layerF[n] = b;
+    phi[n] = c;
+    eta[n] = d;
   }
+  //cout << " " << becF[1] << " " << layerF[1]<< " "  << phi[1]<< " "  << eta[1] << endl;
 
   //file open
   TFile* fin = TFile::Open(finname.c_str(), "READ");
@@ -84,20 +94,29 @@ int L1AvsToT2018(){
   cout << "filling in histogram........." << endl;
 
   //fill in histogram
+  int nbingo = 0;
   for (Int_t ientry = 0; ientry < N; ientry++) {
     tin->GetEntry(ientry);    
+    bool bingo = false;
 
     for(int i =1;i<n;i++){
-      if(!(eta_index == eta[i] && phi_index == phi[i])){
-        h1->Fill(ToT);
-        h3->Fill(L1A);
-        if(L1A<3&&ToT<20&&bec==0&&layer==3){
-          h2->Fill(L1A,ToT);
-        }
+      if(bec == becF[i] && layer == layerF[i] && phi_index == phi[i] && eta_index == eta[i]) {
+        bingo = true;
+        nbingo++;
       }
-    } 
+    }
+
+    if(bingo == false){
+      h1->Fill(ToT);
+      h3->Fill(L1A);
+      if(L1A<3&&ToT<20&&bec==0&&layer==3){
+        h2->Fill(L1A,ToT);
+      }
+    }
 
   }
+
+  cout << "nbingo =  " << nbingo << endl;
   cout << "finished filling in histogram" << endl;
 
   //draw histogram
