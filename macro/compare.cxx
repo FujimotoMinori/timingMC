@@ -17,7 +17,7 @@ int compare(){
 	std::cout << "#-----start checkflipbitFE.cxx-----" << std::endl;
 
 	//set open file
-	TString ifn = "../text/datanewL1m.txt";
+	TString ifn = "../text/datanewL2m.txt";
 	TString ifn2 = "../text/tunedL2.txt";
 
 	//TString name;
