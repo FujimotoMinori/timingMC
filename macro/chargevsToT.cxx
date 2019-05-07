@@ -15,8 +15,8 @@
 using namespace std;
 
 int chargevsToT(){
-	string finname = "/Users/fujimoto/Desktop/data/outputMC1028.root";
-	string foutname = "../rootfile/tot.root";
+	string finname = "/Users/fujimoto/Desktop/data/outputMC0424_2.root";
+	//string foutname = "../rootfile/tot.root";
 
 	//file open
 	TFile* fin = TFile::Open(finname.c_str(), "READ");
@@ -47,8 +47,8 @@ int chargevsToT(){
 	cout << "entry number=" << N << endl;
 
   //set output file
-	TFile* fout = TFile::Open(foutname.c_str(), "RECREATE"); 
-	std::ofstream summary("../text/chargedistribution.txt");
+	//TFile* fout = TFile::Open(foutname.c_str(), "RECREATE"); 
+	//std::ofstream summary("../text/chargedistribution.txt");
 
   //make canvas
   //TString name;
@@ -60,7 +60,7 @@ int chargevsToT(){
 	TH2F* hedge[3];
 	for(int LID=1;LID<4;LID++){
 	std::cout << "layer ID=" << LID << std::endl;
-	summary << "layer ID=" << LID << endl;
+	//summary << "layer ID=" << LID << endl;
 	hedge[LID] = new TH2F(Form("edge%d",LID),Form("layer#%d",LID),7,0,7,7,4,10);
 	
   //make histogram
@@ -107,26 +107,24 @@ int chargevsToT(){
 			mean = hToT[LID][i][j]->GetMean();
 			sigma = hToT[LID][i][j]->GetRMS();
 			edge[i][j] = mean+sigma;
-			//cout << "edge in ToT " << i << "in module " << j << "= " << edge[i][j] << endl;
+			cout << "edge in ToT " << i << "in module " << j << "= " << edge[i][j] << endl;
 			hedge[LID]->Fill(j,i,edge[i][j]);
 			edgetotal[i] += edge[i][j];
 
             //hToT[LID][i][j]->Draw("same");
         }
-			//c1->Print(name, "pdf"); 
 			cout << "--------------------------mean edge in ToT " << i << " of all module= " << edgetotal[i]/nmodule << endl;
-			summary << "--------------------------mean edge in ToT " << i << " of all module= " << edgetotal[i]/nmodule << endl;
+			//summary << "--------------------------mean edge in ToT " << i << " of all module= " << edgetotal[i]/nmodule << endl;
 	}
-	//c1->Print(name + "]", "pdf");
 
-    hedge[LID]->SetStats(0);
-    hedge[LID]->Draw("text45 colz");
-    hedge[LID]->Write();
+    //hedge[LID]->SetStats(0);
+    //hedge[LID]->Draw("text45 colz");
+    //hedge[LID]->Write();
 
 	}//layerID loop
 
-	fout->Close();
-	summary.close();
+	//fout->Close();
+	//summary.close();
 
 	return 0;
 }

@@ -17,7 +17,7 @@ int prob(){
   cout << "----- start prob.cxx -----" << endl;
 
   //string finname = "../data/TimingChargePix.root"; //data2017
-  string finname = "../data/TimingChargePix.root"; //data2017
+  string finname = "/Users/fujimoto/Desktop/data/timingCharge_361635.root"; //data2017
   string foutname = "../data/test3.root";
 
   //file open
@@ -66,11 +66,11 @@ int prob(){
   for (Int_t ientry = 0; ientry < N; ientry++) {
     int tot;
     tin->GetEntry(ientry);    
-    if(L1A<3&&ToT<20&&bec==0&&layer==3/*&&abs(eta_index)==0*/){
+    if(L1A<3&&ToT<20&&bec==0&&layer==2/*&&abs(eta_index)==0*/){
       h2->Fill(L1A,ToT);
     }
     for(int e=0;e<nParam;e++){
-      if(L1A<3&&ToT<20&&bec==0&&layer==3&&abs(eta_index)==e){
+      if(L1A<3&&ToT<20&&bec==0&&layer==2&&abs(eta_index)==e){
       //if(L1A<3&&ToT<20&&bec==0&&layer==1&&abs(phi_index)==e){
         eta[e]->Fill(L1A,ToT);
         //phi[e]->Fill(L1A,ToT);
@@ -159,7 +159,7 @@ int prob(){
   for(int i=0;i<nParam;i++){
     cout << "i=" << i << endl;
     //g[i] = new TGraph(n, x[i], y[i]);
-    g[i] = new TGraphErrors(n-6, x[i]+6, y[i]+6,xe[i]+6,ye[i]+6);
+    g[i] = new TGraphErrors(n-4, x[i]+4, y[i]+4,xe[i]+4,ye[i]+4);
     g[i]->SetMarkerColor(i+1);
   }
 

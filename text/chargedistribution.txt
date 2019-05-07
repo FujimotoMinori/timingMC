@@ -1,8 +1,8 @@
 layer ID=1
---------------------------mean edge in ToT 4 of all module= 6674.3
---------------------------mean edge in ToT 5 of all module= 7645.17
---------------------------mean edge in ToT 6 of all module= 8641.44
---------------------------mean edge in ToT 7 of all module= 9647.19
---------------------------mean edge in ToT 8 of all module= 10663.3
---------------------------mean edge in ToT 9 of all module= 11688.3
+--------------------------mean edge in ToT 4 of all module= 6666.95
+--------------------------mean edge in ToT 5 of all module= 7647.81
+--------------------------mean edge in ToT 6 of all module= 8644.58
+--------------------------mean edge in ToT 7 of all module= 9651.24
+--------------------------mean edge in ToT 8 of all module= 10659.6
+--------------------------mean edge in ToT 9 of all module= 11679.7
 layer ID=2

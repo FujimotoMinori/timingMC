@@ -17,8 +17,8 @@ int probMCphi(){
   cout << "----- start probMCphi.cxx -----" << endl;
 
   //string finname = "../data/outputMC2017newcharge.root"; //MC2015
-  string finname = "../data/outputMC2017withphi.root"; //MC2017 
-  string foutname = "../data/test3.root";
+  string finname = "/Users/fujimoto/Desktop/data/outputMC0424_2.root";  
+  string foutname = "../test3.root";
 
   //file open
   TFile* fin = TFile::Open(finname.c_str(), "READ");

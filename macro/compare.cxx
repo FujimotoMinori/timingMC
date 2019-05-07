@@ -17,8 +17,8 @@ int compare(){
 	std::cout << "#-----start checkflipbitFE.cxx-----" << std::endl;
 
 	//set open file
-	TString ifn = "../text/datanewL2m.txt";
-	TString ifn2 = "../text/tunedL2.txt";
+	TString ifn = "../text/data2018blayer.txt";
+	TString ifn2 = "../text/tuned2018blayer.txt";
 
 	//TString name;
 	//name.Form("canv.pdf");
@@ -58,6 +58,7 @@ int compare(){
 		c = 0;
 		sscanf(str.data(), "%d %f %f", &a, &b, &c);
 		val1[a] = b;
+		std::cout << "val" << a << " val from data= " << val1[a] << std::endl;
 		err1[a] = c;
 	}
 
@@ -85,9 +86,9 @@ int compare(){
     Double_t x[n] = {} ,y[n] = {};
     Double_t xe[n] = {} ,ye[n] = {};
     int i = 0;
-	for(i=6;i<20;i++){
-		//std::cout << "ToT" << i << " val from data= " << val1[i] << std::endl;
-		//std::cout << "ToT" << i << " val from MC= " << val2[i] << std::endl;
+	for(i=4;i<20;i++){
+		std::cout << "ToT" << i << " val from data= " << val1[i] << std::endl;
+		std::cout << "ToT" << i << " val from MC= " << val2[i] << std::endl;
 		val = val2[i] - val1[i];
 		err = err2[i] - err1[i];
 		ratio = val2[i]/val1[i];
@@ -103,7 +104,7 @@ int compare(){
 		std::cout << "ratioerror in ToT " << x[i] << " = " << ratioerr << std::endl;
 	}
 
-    TGraphErrors *gr = new TGraphErrors(n-6,x+6,y+6,xe+6,ye+6);
+    TGraphErrors *gr = new TGraphErrors(n-4,x+4,y+4,xe+4,ye+4);
     gr->SetMaximum(2.0);
     gr->SetMinimum(0.0);
     gr->SetTitle("Ratio of Data and MC;ToT;prob of MC / prob of data");

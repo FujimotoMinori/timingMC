@@ -16,7 +16,7 @@ using namespace std;
 int probMC(){
   cout << "----- start prob.cxx -----" << endl;
 
-  string finname = "/Users/fujimoto/Desktop/data/outputMC2017ith.root"; //MC2017
+  string finname = "/Users/fujimoto/Desktop/data/outputMC0424_2.root"; //MC2017
   //string finname = "../data/outputMC2017newcharge.root"; //MC2015
   //string foutname = "../data/test3.root";
 
@@ -62,11 +62,11 @@ int probMC(){
   for (Int_t ientry = 0; ientry < N; ientry++) {
     int tot;
     tin->GetEntry(ientry);    
-    if(bunch<3&&ToT<20&&ToT>=6&&bec==0&&layerID==3/*&&abs(moduleID)==0*/){
+    if(bunch<3&&ToT<20&&ToT>=4&&bec==0&&layerID==1/*&&abs(moduleID)==0*/){
       h2->Fill(bunch,ToT);
     }
     for(int e=0;e<nParam;e++){
-      if(bunch<3&&ToT<20&&ToT>=6&&bec==0&&layerID==3&&abs(moduleID)==e){
+      if(bunch<3&&ToT<20&&ToT>=4&&bec==0&&layerID==1&&abs(moduleID)==e){
         eta[e]->Fill(bunch,ToT);
       }
     }
@@ -131,11 +131,12 @@ int probMC(){
   for(int i=0;i<nParam;i++){
     cout << "i=" << i << endl;
     //g[i] = new TGraph(n, x[i], y[i]);
-    g[i] = new TGraphErrors(n-6, x[i]+6, y[i]+6,xe[i]+6,ye[i]+6);
+    g[i] = new TGraphErrors(n-4, x[i]+4, y[i]+4,xe[i]+4,ye[i]+4);
     g[i]->SetMarkerColor(i+1);
   }
 
   TMultiGraph *mg = new TMultiGraph();
+  //mg->GetYaxis()->SetRangeUser(0,0.7);
   TLegend *leg = new TLegend(0.1,0.7,0.48,0.9);
 
   for(int i=0;i<nParam;++i){

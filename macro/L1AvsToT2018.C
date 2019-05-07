@@ -65,6 +65,8 @@ int L1AvsToT2018(){
         return 0;
     }
     cout << " input data file:" << finname.c_str() << " open..." << endl;
+    
+    std::ofstream fout("data2018blayer.txt");
 
     //get tree
     TTree *tin = (TTree*)fin->Get("timingCharge");
@@ -72,9 +74,8 @@ int L1AvsToT2018(){
 
     //make histogram
     TH1F *h1 = new TH1F("h1","ToT",40,1,40);
-    TH2F *h2 = new TH2F("h2","bunchVSToT;L1A;ToT",3,-0.5,2.5,20,1,20);
+    //TH2F *h2 = new TH2F("h2","bunchVSToT;L1A;ToT",3,-0.5,2.5,20,1,20);
     TH1F *h3 = new TH1F("h3","bunch",10,-5.,5.);
-    TH1F *h4 = new TH1F("h4","charge",10,-5.,5.);
 
     //get branch
     Int_t bec;
@@ -93,67 +94,75 @@ int L1AvsToT2018(){
     cout << "entry number=" << N << endl;
     cout << "filling in histogram........." << endl;
 
-    //fill in histogram
-    int nbingo = 0;
-    for (Int_t ientry = 0; ientry < N; ientry++) {
-        tin->GetEntry(ientry);    
-        bool bingo = false;
+    TH2F* hL1A[3];
+    for(int LID=1;LID<2;LID++){ //Layer ID loop
+        std::cout << "layer ID=" << LID << std::endl;
+        hL1A[LID] = new TH2F(Form("L1A%d",LID),Form("layer#%d",LID),3,-0.5,2.5,20,1,20);
 
-        for(int i =1;i<n;i++){
-            if(bec == becF[i] && layer == layerF[i] && phi_index == phi[i] && eta_index == eta[i]) {
-                bingo = true;
-                nbingo++;
+        //fill in histogram
+        int nbingo = 0;
+        for (Int_t ientry = 0; ientry < N; ientry++) {
+            tin->GetEntry(ientry);    
+            bool bingo = false;
+
+            for(int i =1;i<n;i++){
+                if(bec == becF[i] && layer == layerF[i] && phi_index == phi[i] && eta_index == eta[i]) {
+                    bingo = true;
+                    nbingo++;
+                }
+            }
+
+            if(bingo == false){
+                h1->Fill(ToT);
+                //h3->Fill(L1A);
+                if(L1A<3&&ToT<20&&bec==0&&layer==LID){
+                    hL1A[LID]->Fill(L1A,ToT);
+                }
+            }
+
+        }
+
+        cout << "nbingo =  " << nbingo << endl;
+        cout << "finished filling in histogram" << endl;
+
+        //draw histogram
+        TCanvas *c1 = new TCanvas("c1", "c1");
+        h1->Draw();
+        //TCanvas *c2 = new TCanvas("c2", "c2");
+        //hL1A[LID]->Draw("text box");
+        //hL1A[LID]->SetStats(0);
+        //TCanvas *c3 = new TCanvas("c3", "c3");
+        //h3->Draw();
+
+        //get content of histgram
+        double z[hL1A[LID]->GetNbinsX()+1][hL1A[LID]->GetNbinsY()+1];
+        for (int i=1; i<hL1A[LID]->GetNbinsX()+1; i++){  
+            for (int j=0; j<hL1A[LID]->GetNbinsY()+1; j++){
+                z[i][j] = hL1A[LID]->GetBinContent(hL1A[LID]->GetBin(i,j));
             }
         }
 
-        if(bingo == false){
-            h1->Fill(ToT);
-            h3->Fill(L1A);
-            if(L1A<3&&ToT<20&&bec==0&&layer==3){
-                h2->Fill(L1A,ToT);
-            }
-        }
+        //get the prob and error
+        double prob=0.;
+        double e1=0.;
+        double e2=0.;
+        double ep=0.;
+        double n1=0.;
+        double n2=0.;
+        for (int j=0; j<hL1A[LID]->GetNbinsY()+1; j++){
+            if((z[2][j]+z[3][j]) == 0) continue;
+            n1 = z[2][j];
+            n2 = z[3][j];
+            prob = n2/(n1+n2);
+            e1 = pow(n1,0.5);
+            e2 = pow(n2,0.5);
+            ep = sqrt(pow(n2*e1,2)+pow(n1*e2,2))/pow((n1+n2),2);
 
-    }
-
-    cout << "nbingo =  " << nbingo << endl;
-    cout << "finished filling in histogram" << endl;
-
-    //draw histogram
-    TCanvas *c1 = new TCanvas("c1", "c1");
-    h1->Draw();
-    TCanvas *c2 = new TCanvas("c2", "c2");
-    h2->Draw("text box");
-    h2->SetStats(0);
-    TCanvas *c3 = new TCanvas("c3", "c3");
-    h3->Draw();
-
-    //get content of histgram
-    double z[h2->GetNbinsX()+1][h2->GetNbinsY()+1];
-    for (int i=1; i<h2->GetNbinsX()+1; i++){  
-        for (int j=0; j<h2->GetNbinsY()+1; j++){
-            z[i][j] = h2->GetBinContent(h2->GetBin(i,j));
+            cout << "prob when ToT" << j << "= " << prob <<  " error= " << ep << endl; 
+            fout << j << " " << prob << " " << ep << " " << endl;
         }
     }
-
-    //get the prob and error
-    double prob=0.;
-    double e1=0.;
-    double e2=0.;
-    double ep=0.;
-    double n1=0.;
-    double n2=0.;
-    for (int j=0; j<h2->GetNbinsY()+1; j++){
-        if((z[2][j]+z[3][j]) == 0) continue;
-        n1 = z[2][j];
-        n2 = z[3][j];
-        prob = n2/(n1+n2);
-        e1 = pow(n1,0.5);
-        e2 = pow(n2,0.5);
-        ep = sqrt(pow(n2*e1,2)+pow(n1*e2,2))/pow((n1+n2),2);
-
-        cout << "prob when ToT" << j << "= " << prob <<  " error= " << ep << endl; 
-    }
+    fout.close();
 
     cout << "----- finished  L1AvsToT.cxx -----" << endl;
     return 0;

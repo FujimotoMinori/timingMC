@@ -15,7 +15,7 @@
 using namespace std;
 
 int chargevsToTphi_org(){
-	string finname = "../data/outputMC2017withphi.root";
+	string finname = "../data/outputMC0424_2.root";
 	string foutname = "totphi_org.root";
 
 	//file open
@@ -63,7 +63,8 @@ int chargevsToTphi_org(){
   //make histogram
   const int nToT=6;
   const int nmodule=50;
-  TH1F *hToT[nToT][nmodule];
+  //TH1F* hToT[nToT][nmodule];
+  TH1F* hToT[6][50];
 	for (int i=4;i<nToT+4;i++){
 		for (int j=0;j<nmodule;j++){
 			hToT[i][j] = new TH1F(Form("tot%dmodule%d",i,j),"",20,2000,15000);

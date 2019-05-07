@@ -17,7 +17,7 @@ using namespace std;
 int bunchvsToT(){
 	cout << "----- start bunchvsToT.cxx -----" << endl;
 
-	string finname = "/Users/fujimoto/Desktop/data/outputMC1105.root";
+	string finname = "/Users/fujimoto/Desktop/data/outputMC0424_2.root";
 
 	//file open
 	TFile* fin = TFile::Open(finname.c_str(), "READ");
@@ -42,6 +42,7 @@ int bunchvsToT(){
 	TH1F *h2 = new TH1F("h2","bunch",11,-5,5);
 
 	//TFile* fout = TFile::Open(foutname.c_str(), "RECREATE"); 
+    std::ofstream fout("tuned2018blayer.txt");
 	
 	//get branch 
 	Int_t bec;
@@ -65,7 +66,7 @@ int bunchvsToT(){
 	//cout << "-------------------------------------charge =" << charge << endl;
           hcharge->Fill(charge);
           h2->Fill(bunch);
-          if(bunch<3&&ToT<20&&ToT>5&&bec==0&&layerID==3/*&&abs(moduleID)==0*/){
+          if(bunch<3&&ToT<20&&ToT>3&&bec==0&&layerID==1/*&&abs(moduleID)==0*/){
           hQvsToT->Fill(charge,ToT);
           hbunch->Fill(bunch+1,ToT);
           hbunch2->Fill(bunch+1,charge);
@@ -114,6 +115,7 @@ int bunchvsToT(){
 		ep = sqrt(pow(n2*e1,2)+pow(n1*e2,2))/pow((n1+n2),2);
 
 		cout <<  j << " " << prob <<  " " << ep << endl; 
+		fout <<  j << " " << prob <<  " " << ep << endl; 
 	}
 
 	//TCanvas *c3 = new TCanvas("c3", "c3");
@@ -121,6 +123,7 @@ int bunchvsToT(){
 
 	//fout->Write();
 	//fout->Close();
+    fout.close();
 
 	cout << "----- finished  bunchvsToT.cxx -----" << endl;
 
