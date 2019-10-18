@@ -16,8 +16,8 @@ int L1AvsToT(){
 	cout << "----- start L1AvsToT.cxx -----" << endl;
 
 	//string finname = "../data/TimingChargePix.root";
-	string finname = "/Users/fujimoto/Desktop/data/timingChargePix.root";
-	//string finname = "/Users/fujimoto/Desktop/data/timingCharge_361635.root";
+	//string finname = "/Users/fujimoto/Desktop/data/timingChargePix.root";
+	string finname = "/Users/fujimoto/Desktop/data/timingCharge_361635.root";
 	string foutname = "../data/test3.root";
 
 	//file open
@@ -64,11 +64,11 @@ int L1AvsToT(){
 	for (Int_t ientry = 0; ientry < N; ientry++) {
 		int tot;
 		tin->GetEntry(ientry);    
-		h1->Fill(ToT);
+		if(layer == 2)h1->Fill(ToT);
 		h3->Fill(L1A);
         if(L1A == 1) ++Ln1;
         else if(L1A == 2) ++Ln2;
-		if(L1A<3&&ToT<20&&bec==0&&layer==3/*&&abs(eta_index)==6*/){
+		if(L1A<3&&ToT<20&&bec==0&&layer==1/*&&abs(eta_index)==6*/){
 			h2->Fill(L1A,ToT);
 		}
 	}

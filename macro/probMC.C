@@ -16,7 +16,7 @@ using namespace std;
 int probMC(){
   cout << "----- start prob.cxx -----" << endl;
 
-  string finname = "/Users/fujimoto/Desktop/data/outputMC0424_2.root"; //MC2017
+  string finname = "/Users/fujimoto/Desktop/data/outputMC0507.root"; //MC2017
   //string finname = "../data/outputMC2017newcharge.root"; //MC2015
   //string foutname = "../data/test3.root";
 

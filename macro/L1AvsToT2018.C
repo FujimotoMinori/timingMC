@@ -66,7 +66,7 @@ int L1AvsToT2018(){
     }
     cout << " input data file:" << finname.c_str() << " open..." << endl;
     
-    std::ofstream fout("data2018blayer.txt");
+    std::ofstream fout("data2018whole.txt");
 
     //get tree
     TTree *tin = (TTree*)fin->Get("timingCharge");
@@ -95,7 +95,7 @@ int L1AvsToT2018(){
     cout << "filling in histogram........." << endl;
 
     TH2F* hL1A[3];
-    for(int LID=1;LID<2;LID++){ //Layer ID loop
+    for(int LID=3;LID<4;LID++){ //Layer ID loop
         std::cout << "layer ID=" << LID << std::endl;
         hL1A[LID] = new TH2F(Form("L1A%d",LID),Form("layer#%d",LID),3,-0.5,2.5,20,1,20);
 
@@ -113,7 +113,7 @@ int L1AvsToT2018(){
             }
 
             if(bingo == false){
-                h1->Fill(ToT);
+                if(layer == 0) h1->Fill(ToT);
                 //h3->Fill(L1A);
                 if(L1A<3&&ToT<20&&bec==0&&layer==LID){
                     hL1A[LID]->Fill(L1A,ToT);

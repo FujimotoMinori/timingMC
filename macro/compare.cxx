@@ -18,7 +18,7 @@ int compare(){
 
 	//set open file
 	TString ifn = "../text/data2018blayer.txt";
-	TString ifn2 = "../text/tuned2018blayer.txt";
+	TString ifn2 = "../text/tuned2018blayer0507.txt";
 
 	//TString name;
 	//name.Form("canv.pdf");

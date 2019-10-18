@@ -17,7 +17,7 @@ using namespace std;
 int bunchvsToT(){
 	cout << "----- start bunchvsToT.cxx -----" << endl;
 
-	string finname = "/Users/fujimoto/Desktop/data/outputMC0424_2.root";
+	string finname = "/Users/fujimoto/Desktop/data/outputMC0507.root";
 
 	//file open
 	TFile* fin = TFile::Open(finname.c_str(), "READ");
@@ -42,7 +42,7 @@ int bunchvsToT(){
 	TH1F *h2 = new TH1F("h2","bunch",11,-5,5);
 
 	//TFile* fout = TFile::Open(foutname.c_str(), "RECREATE"); 
-    std::ofstream fout("tuned2018blayer.txt");
+    std::ofstream fout("tuned2018blayer0507.txt");
 	
 	//get branch 
 	Int_t bec;
