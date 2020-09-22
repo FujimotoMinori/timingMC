@@ -15,9 +15,9 @@
 
 int justplotprob3(){
   //set open file
-  TString ifn = "../text/dataL2.txt";
-  TString ifn2 = "../text/tunedAll.txt";
-  TString ifn3 = "../text/ithAll.txt";
+  TString ifn = "../text/data2018blayer.txt";
+  TString ifn2 = "../text/tuned2018blayer.txt";
+  TString ifn3 = "../text/MC2015blayer.txt";
 
   std::cout << "#inputFile=" <<ifn2 << std::endl;
   ifstream fin;
@@ -41,7 +41,7 @@ int justplotprob3(){
   fin3.open(ifn3);
   if(fin3.fail()){
     cerr << "#cannot open file3 : " << ifn3 << std::endl;
-    return 1;
+    //return 1;
   }
   std::cout << "#finished opening files" << std::endl;
 
@@ -99,33 +99,56 @@ int justplotprob3(){
   Double_t xe2[n] = {} ,ye2[n] = {};
   Double_t xe3[n] = {} ,ye3[n] = {};
   int i = 0;
-  for(i=6;i<20;i++){
+  for(i=4;i<20;i++){
     x[i] = i;
     x2[i] = i;
     x3[i] = i;
+    xe[i] = 0;
+    xe2[i] = 0;
+    xe3[i] = 0;
     y[i] = val1[i];
+    ye[i] = err1[i];
     y2[i] = val2[i];
+    ye2[i] = err2[i];
     y3[i] = val3[i];
+    ye3[i] = err3[i];
   }
 
-  TGraph *gr = new TGraph(n-6,x+6,y+6);
-  TGraph *gr2 = new TGraph(n-6,x2+6,y2+6);
-  TGraph *gr3 = new TGraph(n-6,x3+6,y3+6);
+  Double_t xlo = 3.;    // x の下限
+  Double_t xhi = 20.;   // x の上限
+  Double_t ylo = 0.;    // y の下限
+  Double_t yhi = 0.07;   // y の上限
+  TCanvas *c1 = new TCanvas("c1","My Canvas",10,10,800,600);
+  TH1F *frame = gPad->DrawFrame(xlo,ylo,xhi,yhi);
+
+  TGraphErrors *gr = new TGraphErrors(n-4,x+4,y+4,xe+4,ye+4);
+  TGraphErrors *gr2 = new TGraphErrors(n-4,x2+4,y2+4,xe2+4,ye2+4);
+  TGraphErrors *gr3 = new TGraphErrors(n-6,x3+6,y3+6,xe3+6,ye3+6);
   gr->SetMaximum(0.7);
   gr->SetMinimum(0.);
   gr->SetTitle("timewalk probability;ToT;prob");
   gr->SetMarkerColor(2);
   gr->SetMarkerStyle(20);
-  gr->SetMarkerSize(1.0);
-  gr->Draw("AP");
+  gr->SetMarkerSize(1.2);
+  gr->Draw("P");
   gr2->SetMarkerColor(4);
   gr2->SetMarkerStyle(20);
-  gr2->SetMarkerSize(1.0);
-  gr2->Draw("P");
+  gr2->SetMarkerSize(1.2);
   gr3->SetMarkerColor(1);
   gr3->SetMarkerStyle(20);
-  gr3->SetMarkerSize(1.0);
+  gr3->SetMarkerSize(1.2);
   gr3->Draw("P");
+  gr2->Draw("P");
+  frame->SetTitle("timewalk probability;ToT;prob");
+  frame->GetYaxis()->SetTitleOffset(1.2);
+
+  TLegend *leg = new TLegend(0.7,0.7,0.9,0.9);
+  leg->AddEntry(gr,"data (2018) ","lep");
+  leg->AddEntry(gr3,"default MC","lep");
+  leg->AddEntry(gr2,"new MC","lep");
+  leg->SetBorderSize(0); 
+  leg->SetFillStyle(0); 
+  leg->Draw();
 
   return 0;
 

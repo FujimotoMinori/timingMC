@@ -62,7 +62,7 @@ int L1AvsToTmodified(){
 
       h1->Fill(ToT);
       h3->Fill(L1A);
-      if(L1A<3&&ToT<20&&bec==0&&layer==3){
+      if(L1A<3&&ToT<20&&bec==0&&layer==1){
         h2->Fill(L1A,ToT);
       }
 

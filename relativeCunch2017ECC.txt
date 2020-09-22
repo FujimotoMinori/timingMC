@@ -1,0 +1,44 @@
+int TimeSvc::relativeBunch2017EC(const SiTotalCharge &totalCharge, int barrel_ec, int layer_disk, int moduleID) const {
+        //prob is from data of 2018 latest timing scan (TimingChargePix.root)
+        //just for EndCaps, by Fujimoto
+        double prob = 0.0;
+        if (abs(barrel_ec)==2 && layer_disk==0) {
+                if      (totalCharge.charge()<5550.0)  { prob = 0.124;} //ToT = 6
+                else if (totalCharge.charge()<6000.0)  { prob = 0.067;} //ToT = 7
+                else if (totalCharge.charge()<6400.0)  { prob = 0.0005;} //ToT = 8
+                else if (totalCharge.charge()<6500.0)  { prob = 0.002;} //ToT = 9
+                else if (totalCharge.charge()<6800.0)  { prob = 0.040;} //ToT = 10
+                else if (totalCharge.charge()<7300.0)  { prob = 0.031;} //ToT = 11
+                else if (totalCharge.charge()<7400.0)  { prob = 0.040;}  //ToT = 12
+                else if (totalCharge.charge()<7500.0)  { prob = 0.001; } //ToT = 13
+        }
+        if (abs(barrel_ec)==2 && layer_disk==1) {
+                if      (totalCharge.charge()<5550.0)  { prob = 0.124;} //ToT = 6
+                else if (totalCharge.charge()<6000.0)  { prob = 0.067;} //ToT = 7
+                else if (totalCharge.charge()<6400.0)  { prob = 0.0005;} //ToT = 8
+                else if (totalCharge.charge()<6500.0)  { prob = 0.002;} //ToT = 9
+                else if (totalCharge.charge()<6800.0)  { prob = 0.040;} //ToT = 10
+                else if (totalCharge.charge()<7300.0)  { prob = 0.031;} //ToT = 11
+                else if (totalCharge.charge()<7400.0)  { prob = 0.040;}  //ToT = 12
+                else if (totalCharge.charge()<7500.0)  { prob = 0.001; } //ToT = 13
+        }
+        if (abs(barrel_ec)==2 && layer_disk==2) {
+                if      (totalCharge.charge()<5400.0)  { prob = 0.180;} //ToT=6
+                else if (totalCharge.charge()<5700.0)  { prob = 0.067;} //ToT=7
+                else if (totalCharge.charge()<5701.0)  { prob = 0.0005;} //ToT=8
+                else if (totalCharge.charge()<5702.0)  { prob = 0.0005;} //ToT=9
+                else if (totalCharge.charge()<5800.0)  { prob = 0.036;} //ToT=10
+                else if (totalCharge.charge()<6000.0)  { prob = 0.031;} //ToT=11
+                else if (totalCharge.charge()<6500.0)  { prob = 0.034;} //ToT=12
+                else if (totalCharge.charge()<7000.0)  { prob = 0.001; } //ToT = 13
+        }
+        
+        double G4Time = getG4Time(totalCharge);
+        double rnd    = CLHEP::RandFlat::shoot(m_rndmEngine,0.0,1.0);
+        double timeWalk = 0.0;
+
+        if (rnd<prob) { timeWalk = 25.0; }
+
+        int BCID = static_cast<int>(floor((G4Time+m_timeZero+timeWalk)/m_timePerBCO));
+        return BCID;
+}

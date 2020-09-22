@@ -17,7 +17,7 @@ using namespace std;
 
 int L1AvsToT2018(){
 
-    string finname = "/Users/fujimoto/Desktop/data/timingCharge_361635.root";
+    string finname = "/Users/fujimoto/Desktop/data/timingChargePix.root";
     TString ifndata = "/Users/fujimoto/Desktop/data/modulecutnew.dat";
 
     //first read data file
@@ -73,9 +73,9 @@ int L1AvsToT2018(){
     cout << "----- get tree -----" << endl;
 
     //make histogram
-    TH1F *h1 = new TH1F("h1","ToT",40,1,40);
-    //TH2F *h2 = new TH2F("h2","bunchVSToT;L1A;ToT",3,-0.5,2.5,20,1,20);
-    TH1F *h3 = new TH1F("h3","bunch",10,-5.,5.);
+    //TH1F *h1 = new TH1F("h1","ToT",40,1,40);
+    //TH1F *h3 = new TH1F("h3","bunch",10,-5.,5.);
+    TH2F *hall = new TH2F("hall","bunchVSToT;L1A;ToT",3,-0.5,2.5,20,1,20);
 
     //get branch
     Int_t bec;
@@ -95,7 +95,8 @@ int L1AvsToT2018(){
     cout << "filling in histogram........." << endl;
 
     TH2F* hL1A[3];
-    for(int LID=3;LID<4;LID++){ //Layer ID loop
+    TCanvas* canv[3];
+    for(int LID=1;LID<4;LID++){ //Layer ID loop
         std::cout << "layer ID=" << LID << std::endl;
         hL1A[LID] = new TH2F(Form("L1A%d",LID),Form("layer#%d",LID),3,-0.5,2.5,20,1,20);
 
@@ -112,13 +113,12 @@ int L1AvsToT2018(){
                 }
             }
 
-            if(bingo == false){
-                if(layer == 0) h1->Fill(ToT);
-                //h3->Fill(L1A);
-                if(L1A<3&&ToT<20&&bec==0&&layer==LID){
+            //if(bingo == false){
+                if(L1A<3&&ToT<20&&abs(bec)==0&&layer==LID){
                     hL1A[LID]->Fill(L1A,ToT);
+                    hall->Fill(L1A,ToT);
                 }
-            }
+            //}
 
         }
 
@@ -126,14 +126,16 @@ int L1AvsToT2018(){
         cout << "finished filling in histogram" << endl;
 
         //draw histogram
+        /*
+        canv[LID] = new TCanvas(Form("canv%d",LID),Form( "canv%d",LID));
+        hL1A[LID]->SetStats(0);
+        hL1A[LID]->SetTitle(Form("Disk%d",LID-1));
+        hL1A[LID]->Draw("box text");
+        */
         TCanvas *c1 = new TCanvas("c1", "c1");
-        h1->Draw();
-        //TCanvas *c2 = new TCanvas("c2", "c2");
-        //hL1A[LID]->Draw("text box");
-        //hL1A[LID]->SetStats(0);
-        //TCanvas *c3 = new TCanvas("c3", "c3");
-        //h3->Draw();
+        hall->Draw("box text");
 
+        /*
         //get content of histgram
         double z[hL1A[LID]->GetNbinsX()+1][hL1A[LID]->GetNbinsY()+1];
         for (int i=1; i<hL1A[LID]->GetNbinsX()+1; i++){  
@@ -161,10 +163,10 @@ int L1AvsToT2018(){
             cout << "prob when ToT" << j << "= " << prob <<  " error= " << ep << endl; 
             fout << j << " " << prob << " " << ep << " " << endl;
         }
-    }
-    fout.close();
+        */
+    }//Layer ID Loop
 
+    fout.close();
     cout << "----- finished  L1AvsToT.cxx -----" << endl;
     return 0;
 }
-

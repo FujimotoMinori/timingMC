@@ -51,12 +51,22 @@ int getrightprob(){
 
           //move hits to next bunches
           double prob = 0.;
-          if (bec == 2 && layerID ==1){
+          if (bec == 2 && layerID ==0){
               if      (charge < 5550) prob = 0.124; //ToT = 6
-              else if (charge < 6000) prob = 0.067;  //ToT = 7
+              else if (charge < 6000) prob = 0.080;  //ToT = 7
               else if (charge < 6400) prob = 0.0005; //ToT = 8
               else if (charge < 6500) prob = 0.002; //ToT = 9
-              else if (charge < 6800) prob = 0.036;  //ToT = 10
+              else if (charge < 6800) prob = 0.040;  //ToT = 10
+              else if (charge < 7300) prob = 0.031;  //ToT = 11
+              else if (charge < 7400) prob = 0.04;  //ToT = 12
+              else if (charge < 7500) prob = 0.001;  //ToT = 13
+          }
+          if (bec == 2 && layerID ==1){
+              if      (charge < 5550) prob = 0.110; //ToT = 6
+              else if (charge < 6000) prob = 0.061;  //ToT = 7
+              else if (charge < 6400) prob = 0.0001; //ToT = 8
+              else if (charge < 6500) prob = 0.0005; //ToT = 9
+              else if (charge < 6800) prob = 0.040;  //ToT = 10
               else if (charge < 7300) prob = 0.031;  //ToT = 11
               else if (charge < 7400) prob = 0.04;  //ToT = 12
               else if (charge < 7500) prob = 0.001;  //ToT = 13
@@ -64,28 +74,18 @@ int getrightprob(){
           if (bec == 2 && layerID ==2){
               if      (charge < 5400) prob = 0.1800; //ToT = 6
               else if (charge < 5700) prob = 0.067;  //ToT = 7
-              else if (charge < 5701) prob = 0.0005; //ToT = 8
-              else if (charge < 5702) prob = 0.0005; //ToT = 9
-              else if (charge < 5880) prob = 0.036;  //ToT = 10
-              else if (charge < 6000) prob = 0.031;  //ToT = 11
+              else if (charge < 5760) prob = 0.048; //ToT = 8
+              else if (charge < 5800) prob = 0.040; //ToT = 9
+              else if (charge < 5880) prob = 0.040;  //ToT = 10
+              else if (charge < 6000) prob = 0.040;  //ToT = 11
               else if (charge < 6500) prob = 0.034;  //ToT = 12
               else if (charge < 7000) prob = 0.001;  //ToT = 13
-          }
-          if (bec == 2 && layerID ==3){
-              if      (charge < 5400) prob = 0.1600; //ToT = 6
-              else if (charge < 5700) prob = 0.062;  //ToT = 7
-              else if (charge < 5701) prob = 0.0005; //ToT = 8
-              else if (charge < 5702) prob = 0.0005; //ToT = 9
-              else if (charge < 6000) prob = 0.030;  //ToT = 10
-              else if (charge < 6600) prob = 0.025;  //ToT = 11
-              else if (charge < 7300) prob = 0.028;  //ToT = 12
-              else if (charge < 7301) prob = 0.001;  //ToT = 13
           }
           double rnd = gRandom->Uniform(0.0,1.0);
           if (rnd<prob) bunch = bunch + 1; 
 
           //fill in the histogram
-          if(bunch<3&&ToT<14&&ToT>5&&bec==2&&layerID==1/*&&abs(moduleID)==0*/){
+          if(bunch<3&&ToT<14&&ToT>5&&bec==2&&layerID==2/*&&abs(moduleID)==0*/){
               hbunch->Fill(bunch+1,ToT);
           }
 	}
@@ -118,6 +118,16 @@ int getrightprob(){
 		cout <<  j << " " << prob[j] <<  " " << ep[j] << endl; 
 		fout <<  j << " " << prob[j] <<  " " << ep[j] << endl; 
 	}
+
+    //compare the prob with the answer
+    /*
+	for (int j=0; j<hbunch->GetNbinsY()+1; j++){
+        double ratio = 0.;
+		if(prob[j] == 0.0) continue;
+        ratio = prob[j]/answer[j];
+		cout << "for ToT" << j << " ratio is =  " << ratio  << endl; 
+    }
+    */
 
     fout.close();
 

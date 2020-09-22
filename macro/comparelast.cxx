@@ -17,9 +17,12 @@ int comparelast(){
 	std::cout << "#-----start checkflipbitFE.cxx-----" << std::endl;
 
 	//set open file
-	TString ifn = "../text/data2018L2.txt";
-	TString ifn2 = "../text/tunedL2.txt";
-	TString ifn3 = "../text/MC2015L2.txt";
+	//TString ifn = "../text/data2018L2.txt";
+	//TString ifn2 = "../text/tunedL2.txt";
+	//TString ifn3 = "../text/MC2015L2.txt";
+	TString ifn = "../text/data2018ECCL1.txt";
+	TString ifn2 = "../text/MC2018ECCL1.txt";
+	TString ifn3 = "../text/MCdefaultECCL1.txt";
 
 	//TString name;
 	//name.Form("canv.pdf");
@@ -152,7 +155,7 @@ int comparelast(){
 		std::cout << "ratioerror in ToT " << xd[id] << " = " << ratioerrd << std::endl;
 	}
 
-    Double_t xlo = 3.;    // x の下限
+    Double_t xlo = 5.;    // x の下限
     Double_t xhi = 20.;   // x の上限
     Double_t ylo = 0.;    // y の下限
     Double_t yhi = 2.;   // y の上限
@@ -177,12 +180,12 @@ int comparelast(){
     leg->SetFillStyle(0); 
     leg->Draw();
 
-    TLine *line = new TLine(3.0,1.0,20,1.0);
+    TLine *line = new TLine(5.0,1.0,20,1.0);
     line->SetLineStyle(2);
     line->Draw("p");
-    TLine *line2 = new TLine(3.0,1.29,20,1.29);
-    line2->SetLineStyle(3);
-    line2->Draw("p");
+    //TLine *line2 = new TLine(5.0,0.70,20,0.70);
+    //line2->SetLineStyle(3);
+    //line2->Draw("p");
 
  return 0;
 

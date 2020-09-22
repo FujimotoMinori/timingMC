@@ -30,18 +30,15 @@ int bunchvsToT(){
 	//get tree
 	TTree *tin = (TTree*)fin->Get("chargeMC");
 	cout << "----- get tree -----" << endl;
-	//tin->Print();
 
 	//make histogram
 	TH1F *htot = new TH1F("htot","ToT",21,0,20);
 	TH1F *hcharge = new TH1F("hcharge","charge",100,0,30000);
-	//TH1F *h2 = new TH1F("h2","bunch",5,0.,2.5);
 	TH2F *hbunch = new TH2F("hbunch","bunchVSToT;bunch;ToT",3,-0.5,2.5,20,1,20);
 	TH2F *hbunch2 = new TH2F("hbunch2","bunchVScharge;bunch;charge",3,-0.5,2.5,60,4000,15000);
 	TH2F *hQvsToT = new TH2F("hbunch","chargeVSToT;charge;ToT",20,3500,10000,20,1,20);
 	TH1F *h2 = new TH1F("h2","bunch",11,-5,5);
 
-	//TFile* fout = TFile::Open(foutname.c_str(), "RECREATE"); 
     std::ofstream fout("tuned2018blayer0507.txt");
 	
 	//get branch 
@@ -63,10 +60,9 @@ int bunchvsToT(){
 	//fill in histogram
 	for (Int_t ientry = 0; ientry < N; ientry++) {
 		  tin->GetEntry(ientry);
-	//cout << "-------------------------------------charge =" << charge << endl;
           hcharge->Fill(charge);
           h2->Fill(bunch);
-          if(bunch<3&&ToT<20&&ToT>3&&bec==0&&layerID==1/*&&abs(moduleID)==0*/){
+          if(bunch<3&&ToT<20&&ToT>5&&bec==-2&&layerID==0/*&&abs(moduleID)==0*/){
           hQvsToT->Fill(charge,ToT);
           hbunch->Fill(bunch+1,ToT);
           hbunch2->Fill(bunch+1,charge);
@@ -118,11 +114,6 @@ int bunchvsToT(){
 		fout <<  j << " " << prob <<  " " << ep << endl; 
 	}
 
-	//TCanvas *c3 = new TCanvas("c3", "c3");
-	//h3->Draw();
-
-	//fout->Write();
-	//fout->Close();
     fout.close();
 
 	cout << "----- finished  bunchvsToT.cxx -----" << endl;
